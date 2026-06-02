@@ -4,112 +4,412 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LJT Video Production</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" type="image/x-icon" href="/assets/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f5f0;
+      --grey: #888;
+      --border: rgba(255,255,255,0.08);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 300;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.4rem 4rem;
+      background: rgba(10,10,10,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.14em;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+
+    .nav-links a {
+      color: var(--grey);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--white); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 80px;
+      padding: 120px 8vw 80px;
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 50% at 75% 35%, rgba(255,255,255,0.03) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 55% at 25% 70%, rgba(255,255,255,0.02) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    /* Logo */
+    .logo-wrapper {
+      flex-shrink: 0;
+      width: 240px;
+      height: 240px;
+      border-radius: 50%;
+      background: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .logo-wrapper::after {
+      content: '';
+      position: absolute;
+      inset: -1px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .logo {
+      width: 160px;
+      height: 160px;
+      object-fit: contain;
+      filter: brightness(1.05);
+    }
+
+    /* Hero text */
+    .hero-text { max-width: 520px; }
+
+    .hero-eyebrow {
+      font-size: 0.75rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--grey);
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 28px;
+      height: 1px;
+      background: var(--grey);
+    }
+
+    .hero-text h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 10vw, 9rem);
+      font-weight: 400;
+      line-height: 0.92;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-text h1 span {
+      display: block;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(255,255,255,0.22);
+    }
+
+    .hero-text p {
+      font-size: 1.05rem;
+      line-height: 1.85;
+      color: rgba(255,255,255,0.6);
+      max-width: 400px;
+    }
+
+    .buttons {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn, .btn-outline {
+      padding: 0.9rem 2rem;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      transition: transform 0.18s, opacity 0.18s;
+    }
+
+    .btn { background: var(--white); color: var(--black); }
+    .btn-outline { border: 1px solid rgba(255,255,255,0.2); color: var(--white); }
+    .btn:hover, .btn-outline:hover { transform: translateY(-2px); opacity: 0.85; }
+
+    /* ── PORTFOLIO SECTIONS ── */
+    .portfolio {
+      padding: 8rem 8vw;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.26em;
+      text-transform: uppercase;
+      color: var(--grey);
+      margin-bottom: 0.9rem;
+    }
+
+    .section-heading {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.2rem, 4vw, 3.5rem);
+      letter-spacing: 0.05em;
+      margin-bottom: 4rem;
+      padding-bottom: 1.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    /* Projects */
+    .project { margin-bottom: 4rem; }
+
+    .project h3 {
+      font-family: 'DM Sans', sans-serif;
+      font-weight: 400;
+      font-size: 1.3rem;
+      letter-spacing: 0.04em;
+      margin-bottom: 1.1rem;
+      color: var(--white);
+    }
+
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .video-container iframe {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .offline-box {
+      padding: 3rem;
+      border: 1px solid var(--border);
+      color: rgba(255,255,255,0.3);
+      text-align: center;
+      font-size: 0.78rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+    }
+
+    /* ── CAROUSEL ── */
+    .carousel {
+      display: flex;
+      gap: 2rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 1rem;
+    }
+
+    .carousel::-webkit-scrollbar { height: 4px; }
+    .carousel::-webkit-scrollbar-track { background: transparent; }
+    .carousel::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+    .carousel-item {
+      min-width: 760px;
+      aspect-ratio: 16/9;
+      scroll-snap-align: start;
+      border: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+
+    .carousel-item iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 2.5rem 4rem;
+      text-align: center;
+      border-top: 1px solid var(--border);
+      color: rgba(255,255,255,0.25);
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1000px) {
+      nav { padding: 1.2rem 1.5rem; }
+
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 2.5rem;
+        padding: 100px 6vw 60px;
+      }
+
+      .hero-eyebrow { justify-content: center; }
+      .hero-eyebrow::before { display: none; }
+      .hero-text p { margin: 0 auto; }
+      .buttons { justify-content: center; }
+
+      .logo-wrapper { width: 180px; height: 180px; }
+      .logo { width: 120px; height: 120px; }
+
+      .portfolio { padding: 5rem 6vw; }
+
+      .carousel-item { min-width: 88vw; }
+    }
+  </style>
 </head>
 <body>
 
-<section class="hero">
+  <nav>
+    <a href="#" class="nav-logo">LJT</a>
+    <ul class="nav-links">
+      <li><a href="#schiller">Schiller-Gymnasium</a></li>
+      <li><a href="#kammerchor">Kammerchor</a></li>
+    </ul>
+  </nav>
 
-  <div class="logo-wrapper">
-    <img src="assets/logo.svg" alt="LJT Logo" class="logo">
-  </div>
-
-  <div class="hero-text">
-    <span class="small-title">VIDEO PRODUCTION</span>
-    <h1>LJT</h1>
-
-    <p>
-      Konzert- und Chorproduktionen für Schulen und Ensembles
-      im Raum Heidenheim.
-    </p>
-
-    <div class="buttons">
-      <a href="https://www.youtube.com/@User.sg.6" target="_blank" class="btn">
-        LJT YouTube
-      </a>
-
-      <a href="https://www.youtube.com/@neuerkammerchor" target="_blank" class="btn-outline">
-        Neuer Kammerchor Heidenheim
-      </a>
-    </div>
-  </div>
-
-</section>
-
-<section class="portfolio">
-
-  <div class="section-title">
-    <span>PORTFOLIO</span>
-    <h2>Schiller-Gymnasium Heidenheim</h2>
-  </div>
-
-  <div class="project">
-    <h3>Maikonzert 2026</h3>
-
-    <div class="video-container">
-     <iframe width="560" height="315" src="https://www.youtube.com/embed/f-dUF9rSSFk?si=QlLwLhxfVWZZWRo9" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    </div>
-  </div>
-
-  <div class="project">
-    <h3>Weihnachtskonzert 2025</h3>
-
-    <div class="offline-box">
-      USB-Archiv / unveröffentlicht
-    </div>
-  </div>
-
-  <div class="project">
-    <h3>Frühlingskonzert 2025</h3>
-
-    <div class="offline-box">
-      USB-Archiv / unveröffentlicht
-    </div>
-  </div>
-
-  <div class="project">
-    <h3>Weihnachtskonzert 2024</h3>
-
-    <div class="offline-box">
-      USB-Archiv / unveröffentlicht
-    </div>
-  </div>
-
-</section>
-
-<section class="portfolio kammerchor">
-
-  <div class="section-title">
-    <span>ENSEMBLES</span>
-    <h2>Neuer Kammerchor Heidenheim</h2>
-  </div>
-
-  <div class="carousel">
-
-    <div class="carousel-item">
- <iframe width="560" height="315"  referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/oshCxPeIbTU?si=KK_A3UpeKDpGqJ6l" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+  <!-- ── HERO ── -->
+  <section class="hero">
+    <div class="logo-wrapper">
+      <img src="assets/logo.svg" alt="LJT Logo" class="logo">
     </div>
 
-    <div class="carousel-item">
-      <iframe width="560" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/LTeL-PJsHr8?si=X9m7NpeVkdRyRJ5Y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <div class="hero-text">
+      <p class="hero-eyebrow">Video Production</p>
+      <h1>
+        LJT
+        <span>VIDEO</span>
+      </h1>
+      <p>
+        Konzert- und Chorproduktionen für Schulen und Ensembles
+        im Raum Heidenheim.
+      </p>
+      <div class="buttons">
+        <a href="https://www.youtube.com/@User.sg.6" target="_blank" class="btn">LJT YouTube</a>
+        <a href="https://www.youtube.com/@neuerkammerchor" target="_blank" class="btn-outline">Neuer Kammerchor Heidenheim</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCHILLERGYMNASIUM ── -->
+  <section class="portfolio" id="schiller">
+    <p class="section-label">Portfolio</p>
+    <h2 class="section-heading">Schiller-Gymnasium Heidenheim</h2>
+
+    <div class="project">
+      <h3>Maikonzert 2026</h3>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/f-dUF9rSSFk?si=QlLwLhxfVWZZWRo9"
+          title="Maikonzert 2026"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
     </div>
 
-    <div class="carousel-item">
-     <iframe width="560" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/MCgdgacNUsU?si=0xYy0J5GHDOi6Nkr" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <div class="project">
+      <h3>Weihnachtskonzert 2025</h3>
+      <div class="offline-box">USB-Archiv · Unveröffentlicht</div>
     </div>
 
-    <div class="carousel-item">
-<iframe width="560" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/zPW1YPiDbXs?si=_t-TMg1Bftx5SLeI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>    </div>
+    <div class="project">
+      <h3>Frühlingskonzert 2025</h3>
+      <div class="offline-box">USB-Archiv · Unveröffentlicht</div>
+    </div>
 
-    <div class="carousel-item">
-<iframe width="560" height="315" referrerpolicy="strict-origin-when-cross-origin" src="https://www.youtube.com/embed/hLePcNlsWOw?si=CgH9epoxqkZqn4fA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>    </div>
+    <div class="project">
+      <h3>Weihnachtskonzert 2024</h3>
+      <div class="offline-box">USB-Archiv · Unveröffentlicht</div>
+    </div>
+  </section>
 
-</section>
+  <!-- ── KAMMERCHOR ── -->
+  <section class="portfolio kammerchor" id="kammerchor">
+    <p class="section-label">Ensembles</p>
+    <h2 class="section-heading">Neuer Kammerchor Heidenheim</h2>
 
-<footer>
-  <p>© 2026 LJT Video Production</p>
-</footer>
+    <div class="carousel">
+
+      <div class="carousel-item">
+        <iframe src="https://www.youtube.com/embed/oshCxPeIbTU?si=KK_A3UpeKDpGqJ6l"
+          title="Kammerchor 1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+
+      <div class="carousel-item">
+        <iframe src="https://www.youtube.com/embed/LTeL-PJsHr8?si=X9m7NpeVkdRyRJ5Y"
+          title="Kammerchor 2"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+
+      <div class="carousel-item">
+        <iframe src="https://www.youtube.com/embed/MCgdgacNUsU?si=0xYy0J5GHDOi6Nkr"
+          title="Kammerchor 3"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+
+      <div class="carousel-item">
+        <iframe src="https://www.youtube.com/embed/zPW1YPiDbXs?si=_t-TMg1Bftx5SLeI"
+          title="Kammerchor 4"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+
+      <div class="carousel-item">
+        <iframe src="https://www.youtube.com/embed/hLePcNlsWOw?si=CgH9epoxqkZqn4fA"
+          title="Kammerchor 5"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 LJT Video Production</p>
+  </footer>
 
 </body>
 </html>
